@@ -18,7 +18,9 @@ clone radix-dapp-toolkit       https://github.com/radixdlt/radix-dapp-toolkit   
 clone radix-docs               git@github.com:gguuttss/radix-docs.git           master
 clone radix-gateway-api-rust   git@github.com:ociswap/radix-client.git          main
 clone radixdlt-scrypto         git@github.com:radixdlt/radixdlt-scrypto.git     develop
+clone rola                     git@github.com:radixdlt/rola.git                 main
 clone tanstack-router          git@github.com:TanStack/router.git               main
 clone effect                   git@github.com:Effect-TS/effect.git              main
+clone radix-web3.js            git@github.com:xstelea/radix-web3.js.git        main
 
 echo "done: all repos in .repos/"

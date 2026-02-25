@@ -2,7 +2,7 @@
 
 Curated deep-reference docs designed for AI coding agents (Claude, Cursor, etc.) to understand how to build dApps and Scrypto components on the Radix network.
 
-19 context files covering **Effect**, **Radix DLT / Scrypto**, **TanStack Router**, and **React 19**.
+20 context files covering **Effect**, **Radix DLT / Scrypto**, **TanStack Router**, and **React 19**.
 
 ## Usage
 
@@ -33,7 +33,7 @@ If you have the repo cloned locally, run `./install.sh <target>` instead. Or cop
 | [effect-Schema](./context/effect-Schema.md) | Runtime validation and transformation with full type inference — schemas, combinators, encoding/decoding |
 | [effect-atom](./context/effect-atom.md) | `@effect-atom/atom` — reactive state management bridging Effect and React |
 
-#### Radix DLT / Scrypto (9 docs)
+#### Radix DLT / Scrypto (10 docs)
 
 | Doc | Description |
 |-----|-------------|
@@ -41,6 +41,7 @@ If you have the repo cloned locally, run `./install.sh <target>` instead. Or cop
 | [radix-Account](./context/radix-Account.md) | Account native blueprint — state structure, 30 methods, deposit rules, owner badge system |
 | [radix-Gateway](./context/radix-Gateway.md) | `@radix-effects/gateway` — Effect wrapper with tagged errors, 429 retry, pagination, batching |
 | [radix-GatewayRustSdk](./context/radix-GatewayRustSdk.md) | `radix-client` Rust crate — typed async/blocking HTTP clients for Gateway and Core APIs |
+| [radix-ROLA](./context/radix-ROLA.md) | ROLA — challenge-response auth verifying wallet identity via on-ledger `owner_keys` |
 | [radix-Sbor](./context/radix-Sbor.md) | SBOR — wire format, value kinds, schema system, derive macros, depth-limited traversal |
 | [radix-SubIntents](./context/radix-SubIntents.md) | Subintents / pre-authorizations — composable partial transactions, multisig and governance |
 | [radix-TransactionManifest](./context/radix-TransactionManifest.md) | Transaction manifest — V1/V2 instructions, ManifestBuilder, compiler pipeline, static validation |

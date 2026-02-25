@@ -1,39 +1,146 @@
 # Context Reference Index
 
-Deep-analysis reference docs for AI agents. Each doc is a self-contained technical reference built from source-code analysis of vendored repos.
+Deep-analysis reference docs for AI agents building on Radix + Effect + TanStack. **21 files, ~14,060 lines total.** Load selectively — use the routing table below to pick only what your current task needs.
 
 ---
 
-## Effect
+## What to Load
 
-| Doc | Description |
-|-----|-------------|
-| [effect-Context](./context/effect-Context.md) | Dependency injection via `Context.Tag`, typed service containers, and the `R` (Requirements) type parameter |
-| [effect-Layer](./context/effect-Layer.md) | Composable, memoized service blueprints — constructors, composition algebra (`provide`/`merge`/`provideMerge`), MemoMap, scope hierarchy |
-| [effect-Pipe](./context/effect-Pipe.md) | Standalone `pipe()` vs method `.pipe()`, pipeable interface, `flow`, and when to use `Effect.gen` instead |
-| [effect-Platform](./context/effect-Platform.md) | `@effect/platform` — unified abstractions for HTTP client/server, filesystem, terminal, workers, sockets, and key-value store |
-| [effect-Queue](./context/effect-Queue.md) | Fiber-safe async bounded queues — backpressure, dropping, sliding strategies, producer/consumer patterns, shutdown semantics |
-| [effect-Rpc](./context/effect-Rpc.md) | `@effect/rpc` — type-safe, transport-agnostic RPC: procedure definitions with schemas, groups, middleware, streaming, and multi-transport serving |
-| [effect-Schema](./context/effect-Schema.md) | Runtime validation and transformation with full type inference — built-in schemas, combinators, encoding/decoding, Effect integration |
-| [effect-atom](./context/effect-atom.md) | `@effect-atom/atom` — reactive state management bridging Effect and React: atoms, derived computations, dependency tracking, `Result<A, E>` |
+Task-oriented reading lists. Numbers indicate suggested loading order (dependencies first).
 
-## Radix
+### Building a Radix dApp (TypeScript)
 
-| Doc | Description |
-|-----|-------------|
-| [radix-AccessRule](./context/radix-AccessRule.md) | Access control type hierarchy — `AllowAll`/`DenyAll`/`Protected`, composite requirements, role assignment, SBOR encoding |
-| [radix-Account](./context/radix-Account.md) | Account native blueprint — state structure, 30 methods, deposit validation, owner badge system, virtual account derivation |
-| [radix-Gateway](./context/radix-Gateway.md) | `@radix-effects/gateway` — Effect wrapper around Gateway API with tagged errors, 429 retry, exhaustive pagination, chunked batching |
-| [radix-GatewayRustSdk](./context/radix-GatewayRustSdk.md) | `radix-client` Rust crate — typed async/blocking HTTP clients for Gateway and Core APIs, dual feature flags |
-| [radix-Sbor](./context/radix-Sbor.md) | SBOR (Scrypto Binary Object Representation) — wire format, value kinds, schema system, derive macros, depth-limited traversal |
-| [radix-SubIntents](./context/radix-SubIntents.md) | Subintents / pre-authorizations — composable partial transactions, `YIELD_TO_CHILD`/`YIELD_TO_PARENT`, multisig and governance patterns |
-| [radix-TransactionManifest](./context/radix-TransactionManifest.md) | Transaction manifest system — V1/V2 instruction sets, ManifestBuilder, compiler pipeline, static validation, instruction effects |
-| [radix-radix-dapp-toolkit](./context/radix-radix-dapp-toolkit.md) | `@radixdlt/radix-dapp-toolkit` — wallet connection, transaction signing, dual transport (Extension + Relay), RxJS reactive state |
-| [radix-transactions](./context/radix-transactions.md) | `radix-transactions` Rust crate — building, signing, validating, and serializing transactions (V1/V2 model, Signer trait) |
+1. [effect-Context](./context/effect-Context.md) — DI fundamentals (`Context.Tag`, `R` parameter)
+2. [effect-Layer](./context/effect-Layer.md) — service composition
+3. [effect-Schema](./context/effect-Schema.md) — runtime validation
+4. [radix-radix-dapp-toolkit](./context/radix-radix-dapp-toolkit.md) — wallet connection + signing
+5. [radix-TransactionManifest](./context/radix-TransactionManifest.md) — building manifests
+6. [radix-TxTool](./context/radix-TxTool.md) — Effect transaction builder (sign, submit, poll)
+7. [radix-Gateway](./context/radix-Gateway.md) — querying ledger state
+8. [tanstackStart-ConsultationDapp](./context/tanstackStart-ConsultationDapp.md) — full-stack reference app
 
-## TanStack / React
+### Authenticating wallet users (ROLA)
 
-| Doc | Description |
-|-----|-------------|
-| [tanstack-Router](./context/tanstack-Router.md) | TanStack Router — type-safe client-side routing with SSR, file-based routing, search param validation, data loading, code splitting |
-| [tanstackStart-ConsultationDapp](./context/tanstackStart-ConsultationDapp.md) | Consultation dApp architecture — React 19 + TanStack Start + Effect Atoms + Radix, governance voting UI, full tech stack reference |
+1. [radix-radix-dapp-toolkit](./context/radix-radix-dapp-toolkit.md) — wallet challenge flow
+2. [radix-ROLA](./context/radix-ROLA.md) — server-side signature verification
+3. [radix-Account](./context/radix-Account.md) — `owner_keys` metadata & virtual derivation
+4. [radix-Gateway](./context/radix-Gateway.md) — fetching on-ledger public keys
+
+### Working with transactions
+
+1. [radix-Sbor](./context/radix-Sbor.md) — binary encoding (wire format for all values)
+2. [radix-TransactionManifest](./context/radix-TransactionManifest.md) — instruction sets & ManifestBuilder
+3. [radix-transactions](./context/radix-transactions.md) — building, signing, serializing (Rust)
+4. [radix-TxTool](./context/radix-TxTool.md) — Effect-TS lifecycle: build intent → sign → submit → poll
+5. [radix-SubIntents](./context/radix-SubIntents.md) — composable partial transactions
+6. [radix-AccessRule](./context/radix-AccessRule.md) — auth rules governing method access
+
+### Understanding Scrypto / on-ledger primitives
+
+1. [radix-Sbor](./context/radix-Sbor.md) — SBOR encoding & schema system
+2. [radix-AccessRule](./context/radix-AccessRule.md) — access control hierarchy
+3. [radix-Account](./context/radix-Account.md) — native Account blueprint (30 methods)
+4. [radix-TransactionManifest](./context/radix-TransactionManifest.md) — manifest instruction set
+
+### Querying the Radix Gateway API
+
+- **TypeScript:** [radix-Gateway](./context/radix-Gateway.md) — Effect wrapper with retry, pagination, batching
+- **Rust:** [radix-GatewayRustSdk](./context/radix-GatewayRustSdk.md) — typed async/blocking HTTP clients
+
+### Effect-TS fundamentals
+
+1. [effect-Pipe](./context/effect-Pipe.md) — `pipe()`, `.pipe()`, `flow`, `Effect.gen`
+2. [effect-Context](./context/effect-Context.md) — `Context.Tag`, service containers, `R` type
+3. [effect-Layer](./context/effect-Layer.md) — composable service blueprints
+4. [effect-Schema](./context/effect-Schema.md) — runtime validation & transformation
+5. [effect-Queue](./context/effect-Queue.md) — fiber-safe bounded queues
+6. [effect-Platform](./context/effect-Platform.md) — HTTP, filesystem, terminal, workers
+
+### Setting up an Effect RPC server
+
+1. [effect-Schema](./context/effect-Schema.md) — schema definitions for procedures
+2. [effect-Rpc](./context/effect-Rpc.md) — procedures, groups, middleware, streaming
+3. [effect-Context](./context/effect-Context.md) — service dependencies for handlers
+4. [effect-Layer](./context/effect-Layer.md) — wiring handler services
+5. [effect-Platform](./context/effect-Platform.md) — HTTP server transport
+
+---
+
+## Complete File Catalog
+
+Ordered by dependency (prerequisites listed first within each category).
+
+### Effect (8 files · ~5,950 lines)
+
+| File | Lines | Description | Key deps |
+|------|------:|-------------|----------|
+| [effect-Pipe](./context/effect-Pipe.md) | 517 | `pipe()`, `.pipe()`, `flow`, and when to use `Effect.gen` | — |
+| [effect-Context](./context/effect-Context.md) | 380 | DI via `Context.Tag`, typed service containers, `R` type parameter | — |
+| [effect-Layer](./context/effect-Layer.md) | 597 | Composable memoized service blueprints — constructors, composition algebra, MemoMap, scopes | Context |
+| [effect-Schema](./context/effect-Schema.md) | 1,118 | Runtime validation & transformation — built-in schemas, combinators, encoding/decoding | — |
+| [effect-Queue](./context/effect-Queue.md) | 683 | Fiber-safe async bounded queues — backpressure, dropping, sliding, shutdown semantics | — |
+| [effect-Platform](./context/effect-Platform.md) | 1,171 | `@effect/platform` — HTTP client/server, filesystem, terminal, workers, sockets, KV store | Context, Layer |
+| [effect-Rpc](./context/effect-Rpc.md) | 1,077 | `@effect/rpc` — type-safe transport-agnostic RPC: procedures, groups, middleware, streaming | Schema, Context, Layer |
+| [effect-atom](./context/effect-atom.md) | 406 | `@effect-atom/atom` — reactive state bridging Effect and React: atoms, derived computations | Context |
+
+### Radix (11 files · ~6,440 lines)
+
+| File | Lines | Description | Key deps |
+|------|------:|-------------|----------|
+| [radix-Sbor](./context/radix-Sbor.md) | 806 | SBOR wire format, value kinds, schema system, derive macros, depth-limited traversal | — |
+| [radix-AccessRule](./context/radix-AccessRule.md) | 436 | Access control — `AllowAll`/`DenyAll`/`Protected`, composite requirements, role assignment | SBOR |
+| [radix-Account](./context/radix-Account.md) | 459 | Account native blueprint — state, 30 methods, deposit rules, owner badge, virtual derivation | AccessRule, SBOR |
+| [radix-TransactionManifest](./context/radix-TransactionManifest.md) | 880 | Transaction manifest — V1/V2 instructions, ManifestBuilder, compiler pipeline, validation | SBOR |
+| [radix-transactions](./context/radix-transactions.md) | 814 | `radix-transactions` Rust crate — building, signing, validating, serializing (V1/V2, Signer) | TransactionManifest, SBOR |
+| [radix-SubIntents](./context/radix-SubIntents.md) | 567 | Subintents / pre-authorizations — composable partial transactions, multisig, governance | TransactionManifest |
+| [radix-Gateway](./context/radix-Gateway.md) | 541 | `@radix-effects/gateway` — Effect wrapper with tagged errors, 429 retry, pagination, batching | — |
+| [radix-TxTool](./context/radix-TxTool.md) | 329 | `@radix-effects/tx-tool` — Effect transaction builder: Signer, lifecycle hooks, manifest helpers | Gateway, TransactionManifest, Context, Layer, Schema |
+| [radix-GatewayRustSdk](./context/radix-GatewayRustSdk.md) | 718 | `radix-client` Rust crate — typed async/blocking HTTP clients for Gateway and Core APIs | — |
+| [radix-radix-dapp-toolkit](./context/radix-radix-dapp-toolkit.md) | 357 | `@radixdlt/radix-dapp-toolkit` — wallet connection, signing, dual transport, RxJS state | — |
+| [radix-ROLA](./context/radix-ROLA.md) | 532 | ROLA — challenge-response auth verifying wallet identity via on-ledger `owner_keys` signatures | dapp-toolkit, Gateway, Account |
+
+### TanStack / React (2 files · ~1,680 lines)
+
+| File | Lines | Description | Key deps |
+|------|------:|-------------|----------|
+| [tanstack-Router](./context/tanstack-Router.md) | 1,237 | TanStack Router — type-safe routing, SSR, file-based routes, search params, code splitting | — |
+| [tanstackStart-ConsultationDapp](./context/tanstackStart-ConsultationDapp.md) | 440 | Consultation dApp — React 19 + TanStack Start + Effect Atoms + Radix governance voting | Router, effect-atom, dapp-toolkit |
+
+---
+
+## Dependency Graph
+
+```
+Effect                              Radix                          TanStack
+─────                               ─────                          ───────
+
+Pipe ─────────────┐                 Sbor ──────────┬─────────┐
+                  │                   │            │         │
+Context ────┬─────┤          AccessRule ──┐  TxManifest ──┬──┤     Router
+            │     │                │     │         │      │  │       │
+          Layer   │          Account     │   transactions │  │       │
+            │     │                      │         │      │  │       │
+Schema ─────┼─────┤                      │   SubIntents   │  │  ConsultationDapp
+   │        │     │                      │                │  │    │  │  │
+  Rpc    Platform │               Gateway  GatewayRustSdk │  │    │  │  │
+                  │                  │                     │  │    │  │  │
+                atom              TxTool ─────────────────┘  │    │  │  │
+                  │                  │                         │    │  │  │
+                  │              dapp-toolkit                  │    │  │  │
+                  │                  │                         │    │  │  │
+                  │                ROLA ───────────────────────┘    │  │  │
+                  │                                                 │  │  │
+                  └─────────────────────────────────────────────────┘──┘──┘
+```
+
+Arrows flow downward: a file depends on everything above it that connects to it.
+
+---
+
+## Cross-Cutting Notes
+
+- **SBOR is pervasive.** Any file dealing with on-ledger data (AccessRule, Account, TransactionManifest, transactions) assumes SBOR encoding. Load `radix-Sbor` first if you encounter unfamiliar `ManifestSbor`, `ScryptoSbor`, or `#[derive(ManifestSbor)]` references.
+- **Schema ↔ Gateway.** The Gateway Effect wrapper (`radix-Gateway`) uses `effect-Schema` for response validation. If modifying Gateway response handling, load both.
+- **dapp-toolkit → ROLA pipeline.** ROLA depends on `dapp-toolkit` for the wallet challenge/response flow and `radix-Gateway` for fetching on-ledger `owner_keys`. The three form a pipeline: dapp-toolkit (client) → ROLA (server verification) → Gateway (ledger lookup).
+- **TxTool → Gateway → Signer pipeline.** `radix-TxTool` orchestrates the full TypeScript transaction lifecycle: manifest → intent → sign → submit → poll. It depends on `radix-Gateway` for submission/status and uses `effect-Context`/`effect-Layer`/`effect-Schema` for its service architecture. The `Signer` tag is swappable (Vault for production, private key for tests).
+- **V1 vs V2 transactions.** `radix-TransactionManifest` and `radix-transactions` both cover the V1→V2 evolution. SubIntents are V2-only. If working with V2, load all three.

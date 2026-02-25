@@ -6,11 +6,53 @@ Curated deep-reference docs designed for AI coding agents (Claude, Cursor, etc.)
 
 ## Usage
 
-Point your AI agent at the `context/` directory when working on Radix projects. For example, in Claude Code add to your `CLAUDE.md`:
+```bash
+curl -fsSL https://raw.githubusercontent.com/xstelea/radix-context/main/install.sh | bash
+```
 
+Or with an explicit target directory:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/xstelea/radix-context/main/install.sh | bash -s -- <target>
 ```
-Read the context files in /path/to/context/context/ for Radix, Effect, and TanStack reference.
-```
+
+If you have the repo cloned locally, run `./install.sh <target>` instead. Or copy the `context/` directory and [`AGENTS.md`](./AGENTS.md) manually. `AGENTS.md` follows the [agents.md standard](https://agents.md/) — compatible agents automatically discover it and load relevant context files as needed.
+
+### Context files
+
+#### Effect (8 docs)
+
+| Doc | Description |
+|-----|-------------|
+| [effect-Context](./context/effect-Context.md) | Dependency injection via `Context.Tag`, typed service containers, and the `R` type parameter |
+| [effect-Layer](./context/effect-Layer.md) | Composable, memoized service blueprints — constructors, composition algebra, MemoMap, scope hierarchy |
+| [effect-Pipe](./context/effect-Pipe.md) | Standalone `pipe()` vs method `.pipe()`, pipeable interface, `flow`, and `Effect.gen` |
+| [effect-Platform](./context/effect-Platform.md) | `@effect/platform` — HTTP client/server, filesystem, terminal, workers, sockets, key-value store |
+| [effect-Queue](./context/effect-Queue.md) | Fiber-safe async bounded queues — backpressure, dropping, sliding strategies, shutdown semantics |
+| [effect-Rpc](./context/effect-Rpc.md) | `@effect/rpc` — type-safe, transport-agnostic RPC: procedures, groups, middleware, streaming |
+| [effect-Schema](./context/effect-Schema.md) | Runtime validation and transformation with full type inference — schemas, combinators, encoding/decoding |
+| [effect-atom](./context/effect-atom.md) | `@effect-atom/atom` — reactive state management bridging Effect and React |
+
+#### Radix DLT / Scrypto (9 docs)
+
+| Doc | Description |
+|-----|-------------|
+| [radix-AccessRule](./context/radix-AccessRule.md) | Access control — `AllowAll`/`DenyAll`/`Protected`, composite requirements, role assignment, SBOR encoding |
+| [radix-Account](./context/radix-Account.md) | Account native blueprint — state structure, 30 methods, deposit rules, owner badge system |
+| [radix-Gateway](./context/radix-Gateway.md) | `@radix-effects/gateway` — Effect wrapper with tagged errors, 429 retry, pagination, batching |
+| [radix-GatewayRustSdk](./context/radix-GatewayRustSdk.md) | `radix-client` Rust crate — typed async/blocking HTTP clients for Gateway and Core APIs |
+| [radix-Sbor](./context/radix-Sbor.md) | SBOR — wire format, value kinds, schema system, derive macros, depth-limited traversal |
+| [radix-SubIntents](./context/radix-SubIntents.md) | Subintents / pre-authorizations — composable partial transactions, multisig and governance |
+| [radix-TransactionManifest](./context/radix-TransactionManifest.md) | Transaction manifest — V1/V2 instructions, ManifestBuilder, compiler pipeline, static validation |
+| [radix-radix-dapp-toolkit](./context/radix-radix-dapp-toolkit.md) | `@radixdlt/radix-dapp-toolkit` — wallet connection, signing, dual transport, RxJS state |
+| [radix-transactions](./context/radix-transactions.md) | `radix-transactions` Rust crate — building, signing, validating transactions (V1/V2, Signer trait) |
+
+#### TanStack / React (2 docs)
+
+| Doc | Description |
+|-----|-------------|
+| [tanstack-Router](./context/tanstack-Router.md) | TanStack Router — type-safe routing, SSR, file-based routes, search param validation, code splitting |
+| [tanstackStart-ConsultationDapp](./context/tanstackStart-ConsultationDapp.md) | Consultation dApp architecture — React 19 + TanStack Start + Effect Atoms + Radix governance |
 
 ## Setup
 
@@ -31,42 +73,6 @@ This clones 7 repositories:
 | `radixdlt-scrypto` | Scrypto smart contract language + engine |
 | `effect` | Effect-TS monorepo — core runtime, schemas, platform, RPC |
 | `tanstack-router` | TanStack Router source |
-
-## Context Files
-
-### Effect (8 docs)
-
-| File | Description |
-|------|-------------|
-| `effect-Context.md` | Dependency injection via typed tags and `Context<R>` |
-| `effect-Layer.md` | Composable, memoized service dependency graphs |
-| `effect-Pipe.md` | Standalone `pipe` vs `.pipe()` method patterns |
-| `effect-Platform.md` | `@effect/platform` — HTTP, filesystem, terminal, workers |
-| `effect-Queue.md` | Fiber-safe async bounded queues (backpressure, dropping, sliding) |
-| `effect-Rpc.md` | `@effect/rpc` — type-safe transport-agnostic RPC framework |
-| `effect-Schema.md` | Runtime validation and transformation with full type inference |
-| `effect-atom.md` | Reactive state management for Effect + React |
-
-### Radix DLT / Scrypto (9 docs)
-
-| File | Description |
-|------|-------------|
-| `radix-AccessRule.md` | Access control system — roles, rules, SBOR encoding, authorization |
-| `radix-Account.md` | Account native blueprint — 30 methods, deposit rules, owner badges |
-| `radix-Gateway.md` | Effect wrapper around the Radix Gateway API |
-| `radix-GatewayRustSdk.md` | `radix-client` Rust crate — typed async Gateway/Core API client |
-| `radix-Sbor.md` | SBOR binary serialization format used throughout Radix |
-| `radix-SubIntents.md` | Subintents / pre-authorizations for multisig and governance |
-| `radix-TransactionManifest.md` | Transaction manifest instructions, ManifestBuilder, compiler pipeline |
-| `radix-radix-dapp-toolkit.md` | `@radixdlt/radix-dapp-toolkit` — wallet connection, signing, transport |
-| `radix-transactions.md` | `radix-transactions` Rust crate — building, signing, validating transactions |
-
-### React / TanStack (2 docs)
-
-| File | Description |
-|------|-------------|
-| `tanstack-Router.md` | TanStack Router — type-safe routing, SSR, file-based routes, search params |
-| `tanstackStart-ConsultationDapp.md` | Consultation dApp architecture — TanStack Start + Radix governance |
 
 ## Tech Stack Covered
 

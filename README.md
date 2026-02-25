@@ -2,7 +2,7 @@
 
 Curated deep-reference docs designed for AI coding agents (Claude, Cursor, etc.) to understand how to build dApps and Scrypto components on the Radix network.
 
-19 context files covering **Effect.js**, **Radix DLT / Scrypto**, **TanStack Router**, and **React 19**.
+19 context files covering **Effect**, **Radix DLT / Scrypto**, **TanStack Router**, and **React 19**.
 
 ## Usage
 
@@ -20,7 +20,7 @@ Clone companion source repos (shallow, into `.repos/`):
 ./setup.sh
 ```
 
-This clones 6 repositories:
+This clones 7 repositories:
 
 | Repo | Description |
 |------|-------------|
@@ -29,11 +29,12 @@ This clones 6 repositories:
 | `radix-docs` | Radix developer documentation |
 | `radix-gateway-api-rust` | Rust Gateway/Core API client (`radix-client` crate) |
 | `radixdlt-scrypto` | Scrypto smart contract language + engine |
+| `effect` | Effect-TS monorepo — core runtime, schemas, platform, RPC |
 | `tanstack-router` | TanStack Router source |
 
 ## Context Files
 
-### Effect.js (8 docs)
+### Effect (8 docs)
 
 | File | Description |
 |------|-------------|
@@ -44,7 +45,7 @@ This clones 6 repositories:
 | `effect-Queue.md` | Fiber-safe async bounded queues (backpressure, dropping, sliding) |
 | `effect-Rpc.md` | `@effect/rpc` — type-safe transport-agnostic RPC framework |
 | `effect-Schema.md` | Runtime validation and transformation with full type inference |
-| `effect-atom.md` | Reactive state management for Effect.js + React |
+| `effect-atom.md` | Reactive state management for Effect + React |
 
 ### Radix DLT / Scrypto (9 docs)
 
@@ -69,7 +70,7 @@ This clones 6 repositories:
 
 ## Tech Stack Covered
 
-- **Effect.js** — functional TypeScript: services, layers, schemas, RPC, queues, state
+- **Effect** — functional TypeScript: services, layers, schemas, RPC, queues, state
 - **Radix DLT** — transaction manifests, access rules, accounts, Gateway API, SBOR
 - **Scrypto** — Radix smart contract language and engine internals
 - **TanStack Router / Start** — type-safe routing and full-stack SSR

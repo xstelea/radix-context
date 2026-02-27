@@ -1,6 +1,6 @@
 # Context Reference Index
 
-Deep-analysis reference docs for AI agents building on Radix + Effect + TanStack. **21 files, ~14,060 lines total.** Load selectively — use the routing table below to pick only what your current task needs.
+Deep-analysis reference docs for AI agents building on Radix + Effect + TanStack. **23 files, ~15,740 lines total.** Load selectively — use the routing table below to pick only what your current task needs.
 
 ---
 
@@ -15,9 +15,10 @@ Task-oriented reading lists. Numbers indicate suggested loading order (dependenc
 3. [effect-Schema](./context/effect-Schema.md) — runtime validation
 4. [radix-radix-dapp-toolkit](./context/radix-radix-dapp-toolkit.md) — wallet connection + signing
 5. [radix-TransactionManifest](./context/radix-TransactionManifest.md) — building manifests
-6. [radix-TxTool](./context/radix-TxTool.md) — Effect transaction builder (sign, submit, poll)
-7. [radix-Gateway](./context/radix-Gateway.md) — querying ledger state
-8. [tanstackStart-ConsultationDapp](./context/tanstackStart-ConsultationDapp.md) — full-stack reference app
+6. [radix-TypescriptRadixEngineToolkit](./context/radix-TypescriptRadixEngineToolkit.md) — offline address derivation, SBOR encoding, tx building (TS/WASM)
+7. [radix-TxTool](./context/radix-TxTool.md) — Effect transaction builder (sign, submit, poll)
+8. [radix-Gateway](./context/radix-Gateway.md) — querying ledger state
+9. [tanstackStart-ConsultationDapp](./context/tanstackStart-ConsultationDapp.md) — full-stack reference app
 
 ### Authenticating wallet users (ROLA)
 
@@ -31,9 +32,11 @@ Task-oriented reading lists. Numbers indicate suggested loading order (dependenc
 1. [radix-Sbor](./context/radix-Sbor.md) — binary encoding (wire format for all values)
 2. [radix-TransactionManifest](./context/radix-TransactionManifest.md) — instruction sets & ManifestBuilder
 3. [radix-transactions](./context/radix-transactions.md) — building, signing, serializing (Rust)
-4. [radix-TxTool](./context/radix-TxTool.md) — Effect-TS lifecycle: build intent → sign → submit → poll
-5. [radix-SubIntents](./context/radix-SubIntents.md) — composable partial transactions
-6. [radix-AccessRule](./context/radix-AccessRule.md) — auth rules governing method access
+4. [radix-RadixEngineToolkit](./context/radix-RadixEngineToolkit.md) — offline analysis, address derivation, classification (Rust)
+5. [radix-TypescriptRadixEngineToolkit](./context/radix-TypescriptRadixEngineToolkit.md) — offline tx building, signing, address derivation (TS/WASM)
+6. [radix-TxTool](./context/radix-TxTool.md) — Effect-TS lifecycle: build intent → sign → submit → poll
+7. [radix-SubIntents](./context/radix-SubIntents.md) — composable partial transactions
+8. [radix-AccessRule](./context/radix-AccessRule.md) — auth rules governing method access
 
 ### Understanding Scrypto / on-ledger primitives
 
@@ -41,6 +44,7 @@ Task-oriented reading lists. Numbers indicate suggested loading order (dependenc
 2. [radix-AccessRule](./context/radix-AccessRule.md) — access control hierarchy
 3. [radix-Account](./context/radix-Account.md) — native Account blueprint (30 methods)
 4. [radix-TransactionManifest](./context/radix-TransactionManifest.md) — manifest instruction set
+5. [radix-RadixEngineToolkit](./context/radix-RadixEngineToolkit.md) — manifest classification, entity types, address utilities
 
 ### Querying the Radix Gateway API
 
@@ -83,7 +87,7 @@ Ordered by dependency (prerequisites listed first within each category).
 | [effect-Rpc](./context/effect-Rpc.md) | 1,077 | `@effect/rpc` — type-safe transport-agnostic RPC: procedures, groups, middleware, streaming | Schema, Context, Layer |
 | [effect-atom](./context/effect-atom.md) | 406 | `@effect-atom/atom` — reactive state bridging Effect and React: atoms, derived computations | Context |
 
-### Radix (11 files · ~6,440 lines)
+### Radix (13 files · ~8,115 lines)
 
 | File | Lines | Description | Key deps |
 |------|------:|-------------|----------|
@@ -92,6 +96,8 @@ Ordered by dependency (prerequisites listed first within each category).
 | [radix-Account](./context/radix-Account.md) | 459 | Account native blueprint — state, 30 methods, deposit rules, owner badge, virtual derivation | AccessRule, SBOR |
 | [radix-TransactionManifest](./context/radix-TransactionManifest.md) | 880 | Transaction manifest — V1/V2 instructions, ManifestBuilder, compiler pipeline, validation | SBOR |
 | [radix-transactions](./context/radix-transactions.md) | 814 | `radix-transactions` Rust crate — building, signing, validating, serializing (V1/V2, Signer) | TransactionManifest, SBOR |
+| [radix-RadixEngineToolkit](./context/radix-RadixEngineToolkit.md) | 785 | `radix-engine-toolkit` Rust crate — offline analysis, address derivation, SBOR, classification | transactions, SBOR |
+| [radix-TypescriptRadixEngineToolkit](./context/radix-TypescriptRadixEngineToolkit.md) | 891 | `@radixdlt/radix-engine-toolkit` TS/WASM wrapper — offline tx building, signing, address derivation, SBOR | RadixEngineToolkit |
 | [radix-SubIntents](./context/radix-SubIntents.md) | 567 | Subintents / pre-authorizations — composable partial transactions, multisig, governance | TransactionManifest |
 | [radix-Gateway](./context/radix-Gateway.md) | 541 | `@radix-effects/gateway` — Effect wrapper with tagged errors, 429 retry, pagination, batching | — |
 | [radix-TxTool](./context/radix-TxTool.md) | 329 | `@radix-effects/tx-tool` — Effect transaction builder: Signer, lifecycle hooks, manifest helpers | Gateway, TransactionManifest, Context, Layer, Schema |
@@ -121,9 +127,10 @@ Context ────┬─────┤          AccessRule ──┐  TxManif
           Layer   │          Account     │   transactions │  │       │
             │     │                      │         │      │  │       │
 Schema ─────┼─────┤                      │   SubIntents   │  │  ConsultationDapp
-   │        │     │                      │                │  │    │  │  │
-  Rpc    Platform │               Gateway  GatewayRustSdk │  │    │  │  │
-                  │                  │                     │  │    │  │  │
+   │        │     │                      │         │      │  │    │  │  │
+  Rpc    Platform │               Gateway  EngineToolkit  │  │    │  │  │
+                  │                  │    TsEngineToolkit  │  │    │  │  │
+                  │                  │    GatewayRustSdk   │  │    │  │  │
                 atom              TxTool ─────────────────┘  │    │  │  │
                   │                  │                         │    │  │  │
                   │              dapp-toolkit                  │    │  │  │
@@ -144,3 +151,4 @@ Arrows flow downward: a file depends on everything above it that connects to it.
 - **dapp-toolkit → ROLA pipeline.** ROLA depends on `dapp-toolkit` for the wallet challenge/response flow and `radix-Gateway` for fetching on-ledger `owner_keys`. The three form a pipeline: dapp-toolkit (client) → ROLA (server verification) → Gateway (ledger lookup).
 - **TxTool → Gateway → Signer pipeline.** `radix-TxTool` orchestrates the full TypeScript transaction lifecycle: manifest → intent → sign → submit → poll. It depends on `radix-Gateway` for submission/status and uses `effect-Context`/`effect-Layer`/`effect-Schema` for its service architecture. The `Signer` tag is swappable (Vault for production, private key for tests).
 - **V1 vs V2 transactions.** `radix-TransactionManifest` and `radix-transactions` both cover the V1→V2 evolution. SubIntents are V2-only. If working with V2, load all three.
+- **Rust vs TS Engine Toolkit.** `radix-RadixEngineToolkit` is the native Rust crate for server/CLI use. `radix-TypescriptRadixEngineToolkit` is the `@radixdlt/radix-engine-toolkit` TS/WASM wrapper for browser/Node — same core compiled to WASM. Use Rust for native performance, TS for frontend or Node projects.

@@ -22,5 +22,7 @@ clone rola                     git@github.com:radixdlt/rola.git                 
 clone tanstack-router          git@github.com:TanStack/router.git               main
 clone effect                   git@github.com:Effect-TS/effect.git              main
 clone radix-web3.js            git@github.com:xstelea/radix-web3.js.git        main
+clone radix-engine-toolkit     git@github.com:radixdlt/radix-engine-toolkit.git  main
+clone typescript-radix-engine-toolkit git@github.com:radixdlt/typescript-radix-engine-toolkit.git main
 
 echo "done: all repos in .repos/"
